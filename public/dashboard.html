@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard – SkillLoop</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon">🔄</span>
+        <span>Skill<span class="logo-highlight">Loop</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/explore.html" class="nav-link">Explore Skills</a></li>
+        <li><a href="/dashboard.html" class="nav-link active">My Dashboard</a></li>
+        <li><a href="/add-skill.html" class="nav-btn">+ Share a Skill</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </nav>
+
+  <!-- Page Header & Student Switcher -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Campus Dashboard</h1>
+      <p class="page-subtitle">Welcome back, <strong id="userName">Rahul Sharma</strong>! Track your offered skills and exchange proposals.</p>
+
+      <div class="demo-notice">
+        <span>💡 Evaluation Demo:</span> Switch between student profiles below to test incoming vs outgoing requests!
+      </div>
+
+      <div class="user-selector">
+        <label for="currentUser">Active Student View:</label>
+        <select id="currentUser" class="filter-select" style="max-width:240px; display:inline-block;" onchange="switchUser()">
+          <option value="Rahul Sharma">Rahul Sharma (CS)</option>
+          <option value="Priya Patel">Priya Patel (Design)</option>
+          <option value="Amit Kumar">Amit Kumar (Electronics)</option>
+          <option value="Sneha Reddy">Sneha Reddy (Maths)</option>
+          <option value="Vikram Singh">Vikram Singh (Mech)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Overview Statistics -->
+  <section class="dashboard-stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card stat-card-blue">
+          <div class="stat-icon">📚</div>
+          <div class="stat-number" id="mySkillsCount">0</div>
+          <div class="stat-label">Skills I Offer</div>
+        </div>
+
+        <div class="stat-card stat-card-green">
+          <div class="stat-icon">📥</div>
+          <div class="stat-number" id="requestsReceived">0</div>
+          <div class="stat-label">Requests Received</div>
+        </div>
+
+        <div class="stat-card stat-card-orange">
+          <div class="stat-icon">📤</div>
+          <div class="stat-number" id="requestsSent">0</div>
+          <div class="stat-label">Requests Sent</div>
+        </div>
+
+        <div class="stat-card stat-card-purple">
+          <div class="stat-icon">🎉</div>
+          <div class="stat-number" id="completedCount">0</div>
+          <div class="stat-label">Exchanges Completed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Skills Offered by Current User -->
+  <section class="dashboard-section">
+    <div class="container">
+      <div class="section-header-row">
+        <h2 class="section-title" style="font-size:1.75rem;">Skills Offered by Me</h2>
+        <a href="/add-skill.html" class="btn btn-primary btn-sm">+ Offer Another Skill</a>
+      </div>
+
+      <div id="mySkillsList" class="skills-list">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading your skills...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Requests Received (Incoming) -->
+  <section class="dashboard-section" style="background-color: #ffffff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header-row">
+        <h2 class="section-title" style="font-size:1.75rem;">Exchange Requests Received (Incoming)</h2>
+      </div>
+
+      <div id="requestsReceivedList" class="requests-list">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading incoming requests...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Requests Sent (Outgoing) -->
+  <section class="dashboard-section">
+    <div class="container">
+      <div class="section-header-row">
+        <h2 class="section-title" style="font-size:1.75rem;">My Outgoing Exchange Proposals</h2>
+      </div>
+
+      <div id="requestsSentList" class="requests-list">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading outgoing requests...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Edit Skill Modal Dialog -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Edit Skill Details</h2>
+        <button class="modal-close" onclick="closeEditModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editSkillForm">
+          <input type="hidden" id="editSkillId">
+
+          <div class="form-group">
+            <label for="editTitle">Skill Title <span class="required">*</span></label>
+            <input type="text" id="editTitle" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editDescription">Description <span class="required">*</span></label>
+            <textarea id="editDescription" class="form-input" rows="3" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editCategory">Category <span class="required">*</span></label>
+              <select id="editCategory" class="form-input" required>
+                <option value="Programming">Programming</option>
+                <option value="Design">Design</option>
+                <option value="Music">Music</option>
+                <option value="Languages">Languages</option>
+                <option value="Academics">Academics</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Photography">Photography</option>
+                <option value="Writing">Writing</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="editLevel">Skill Level <span class="required">*</span></label>
+              <select id="editLevel" class="form-input" required>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editAvailability">Available Days <span class="required">*</span></label>
+              <input type="text" id="editAvailability" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label for="editDuration">Duration per Session <span class="required">*</span></label>
+              <input type="text" id="editDuration" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editCredits">Credits (1 - 100) <span class="required">*</span></label>
+            <input type="number" id="editCredits" min="1" max="100" class="form-input" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg">Save Updates ✨</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-icon">🔄</span>
+            <span>Skill<span class="logo-highlight">Loop</span></span>
+          </div>
+          <p>Empowering college campuses through collaborative skill bartering.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/explore.html">Explore Skills</a>
+          <a href="/dashboard.html">My Dashboard</a>
+          <a href="/add-skill.html">Add Skill</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        SkillLoop © 2024 – Built with HTML5, CSS3, Vanilla JS, Node.js, Express & MongoDB.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

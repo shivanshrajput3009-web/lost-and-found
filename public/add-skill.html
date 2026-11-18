@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share a Skill – SkillLoop</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon">🔄</span>
+        <span>Skill<span class="logo-highlight">Loop</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/explore.html" class="nav-link">Explore Skills</a></li>
+        <li><a href="/dashboard.html" class="nav-link">My Dashboard</a></li>
+        <li><a href="/add-skill.html" class="nav-btn active">+ Share a Skill</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Share Your Skill</h1>
+      <p class="page-subtitle">Offer your knowledge to fellow students and earn skill exchange credits</p>
+    </div>
+  </section>
+
+  <!-- Add Skill Form Section -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-card">
+        <form id="addSkillForm">
+          <!-- Student Name -->
+          <div class="form-group">
+            <label for="ownerName">Your Student Name <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="ownerName" 
+              class="form-input" 
+              placeholder="e.g. Rahul Sharma" 
+              required>
+            <span class="form-hint">Enter your name so classmates recognize who is offering this skill.</span>
+          </div>
+
+          <!-- Skill Title -->
+          <div class="form-group">
+            <label for="skillTitle">Skill Title <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="skillTitle" 
+              class="form-input" 
+              placeholder="e.g. Core Java Programming & OOP Lab Prep" 
+              required>
+          </div>
+
+          <!-- Skill Description -->
+          <div class="form-group">
+            <label for="skillDescription">Description & What You Will Teach <span class="required">*</span></label>
+            <textarea 
+              id="skillDescription" 
+              class="form-input" 
+              rows="4" 
+              placeholder="Explain what topics you will cover, prerequisites, and how you plan to conduct the sessions..." 
+              required></textarea>
+          </div>
+
+          <!-- Category and Level Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="skillCategory">Category <span class="required">*</span></label>
+              <select id="skillCategory" class="form-input" required>
+                <option value="">Select Category</option>
+                <option value="Programming">💻 Programming</option>
+                <option value="Design">🎨 Design</option>
+                <option value="Music">🎵 Music</option>
+                <option value="Languages">🌍 Languages</option>
+                <option value="Academics">📖 Academics</option>
+                <option value="Fitness">💪 Fitness</option>
+                <option value="Photography">📷 Photography</option>
+                <option value="Writing">✍️ Writing</option>
+                <option value="Other">📌 Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="skillLevel">Skill Level <span class="required">*</span></label>
+              <select id="skillLevel" class="form-input" required>
+                <option value="">Select Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Availability and Duration Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="skillAvailability">Available Days / Timings <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="skillAvailability" 
+                class="form-input" 
+                placeholder="e.g. Mon, Wed, Fri (After 5 PM)" 
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="skillDuration">Time Duration per Session <span class="required">*</span></label>
+              <input 
+                type="text" 
+                id="skillDuration" 
+                class="form-input" 
+                placeholder="e.g. 1 hour per session" 
+                required>
+            </div>
+          </div>
+
+          <!-- Credits Offered -->
+          <div class="form-group">
+            <label for="skillCredits">Credit Value (1 - 100) <span class="required">*</span></label>
+            <input 
+              type="number" 
+              id="skillCredits" 
+              class="form-input" 
+              min="1" 
+              max="100" 
+              value="15" 
+              placeholder="e.g. 15" 
+              required>
+            <span class="form-hint">Credits reflect the depth/effort of your session (e.g., 10 for basics, 25 for advanced tutoring).</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg btn-full">
+              Publish Skill to Campus Loop 🚀
+            </button>
+            <button type="reset" class="btn btn-outline btn-lg" style="flex:0.4;">
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-icon">🔄</span>
+            <span>Skill<span class="logo-highlight">Loop</span></span>
+          </div>
+          <p>Empowering college campuses through collaborative skill bartering.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/explore.html">Explore Skills</a>
+          <a href="/dashboard.html">My Dashboard</a>
+          <a href="/add-skill.html">Add Skill</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        SkillLoop © 2024 – Built with HTML5, CSS3, Vanilla JS, Node.js, Express & MongoDB.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/add-skill.js"></script>
+</body>
+</html>

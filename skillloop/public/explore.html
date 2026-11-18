@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Skills – SkillLoop</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon">🔄</span>
+        <span>Skill<span class="logo-highlight">Loop</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/explore.html" class="nav-link active">Explore Skills</a></li>
+        <li><a href="/dashboard.html" class="nav-link">My Dashboard</a></li>
+        <li><a href="/add-skill.html" class="nav-btn">+ Share a Skill</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">☰</button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Explore Campus Skills</h1>
+      <p class="page-subtitle">Search, filter, and propose skill exchanges with college students</p>
+    </div>
+  </section>
+
+  <!-- Filters & Search Toolbar -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters-bar">
+        <!-- Keyword Search -->
+        <div class="filter-group">
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="filter-input" 
+            placeholder="🔍 Search skill title, description or owner...">
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-group">
+          <select id="categoryFilter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="Programming">💻 Programming</option>
+            <option value="Design">🎨 Design</option>
+            <option value="Music">🎵 Music</option>
+            <option value="Languages">🌍 Languages</option>
+            <option value="Academics">📖 Academics</option>
+            <option value="Fitness">💪 Fitness</option>
+            <option value="Photography">📷 Photography</option>
+            <option value="Writing">✍️ Writing</option>
+            <option value="Other">📌 Other</option>
+          </select>
+        </div>
+
+        <!-- Skill Level Filter -->
+        <div class="filter-group">
+          <select id="levelFilter" class="filter-select">
+            <option value="">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <!-- Sort Filter -->
+        <div class="filter-group">
+          <select id="sortFilter" class="filter-select">
+            <option value="newest">Sort: Newest First</option>
+            <option value="credits-high">Credits: High to Low</option>
+            <option value="credits-low">Credits: Low to High</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Explore Grid Section -->
+  <section class="explore-section">
+    <div class="container">
+      <div class="results-info" id="resultsCount">Loading skills catalog...</div>
+      
+      <div class="skills-grid" id="skillsGrid">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Connecting to campus database...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill Exchange Request Modal Popup -->
+  <div class="modal-overlay" id="requestModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Propose Skill Exchange</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-skill-title" id="modalSkillTitle">Skill Title</div>
+        <div class="modal-skill-owner">Skill Mentor: <strong id="modalOwnerName">Student</strong></div>
+
+        <form id="requestForm">
+          <input type="hidden" id="requestSkillId">
+
+          <div class="form-group">
+            <label for="requesterName">Your Full Name <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="requesterName" 
+              class="form-input" 
+              placeholder="e.g. Rahul Sharma" 
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="requestMessage">Your Exchange Proposal Message <span class="required">*</span></label>
+            <textarea 
+              id="requestMessage" 
+              class="form-input" 
+              rows="4" 
+              placeholder="Hi! I want to learn this skill because... In exchange, I can help you with..." 
+              required></textarea>
+            <span class="form-hint">Mention what skill or help you can offer in return.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full btn-lg">
+            Send Exchange Request 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-icon">🔄</span>
+            <span>Skill<span class="logo-highlight">Loop</span></span>
+          </div>
+          <p>Empowering college campuses through collaborative skill bartering.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/explore.html">Explore Skills</a>
+          <a href="/dashboard.html">My Dashboard</a>
+          <a href="/add-skill.html">Add Skill</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        SkillLoop © 2024 – Built with HTML5, CSS3, Vanilla JS, Node.js, Express & MongoDB.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/explore.js"></script>
+</body>
+</html>
