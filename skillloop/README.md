@@ -256,7 +256,8 @@ npm start
 ```
 
 ### Step 6: Open the Website in Your Browser
-Visit: **[http://localhost:5000](http://localhost:5000)**
+Visit: **[http://localhost:3000](http://localhost:3000)**
+*(Port 3000 avoids port collisions on Windows systems).*
 
 ---
 
